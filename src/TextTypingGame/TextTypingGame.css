@@ -5,3 +5,38 @@
 .typingGame__warning {
   color: red;
 }
+
+.typingGame__text {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.active {
+  color: green;
+}
+
+.typing__text {
+  display: flex;
+  justify-content: center;
+}
+
+.typingGame__form {
+  position: relative;
+  height: 35px;
+}
+.typingGame__input {
+  position: absolute;
+}
+
+.hide__input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 3;
+  height: 35px;
+}
+
+.typingGame__btn {
+  position: absolute;
+}

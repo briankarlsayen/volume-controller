@@ -5,31 +5,39 @@ import './TextTypingGame.css'
 
 function TextTypingGame() {
   const [inputText, setInputText] = useState('')
-  const [randomText, setRandomText] = useState('')
+  const [randomText, setRandomText] = useState()
   const [warningText, setWarningText] = useState('')
   const [volume, setVolume] = useState(50)
   const [add, setAdd] = useState(false)
   const [subtract, setSubtract] = useState(false)
+  const [correctNum, setCorrectNum] = useState(1)
+
 
   const submitHandler = (e) => {
     e.preventDefault()
     checkSubmit(inputText.toLowerCase())
   }
-  const getRandom = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  
 
   useEffect(()=> {
     setRandomText(getRandomText())
   },[])
 
   
-
+  const getRandom = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
   const getRandomText = () => {
-    const num = getRandom(0, list.length)
-    return list[num].toLowerCase()
+    const newArr = []
+    const newText =  list[getRandom(0, list.length)].toLowerCase()
+    for(let i = 0; i < newText.length; i++){
+      newArr.push({letter: newText.charAt(i), correct: false})
+    }
+    return newArr
   }
 
+
+  //change this thing use what i used in search function inventory, useeffect on every type
   const checkSubmit = (value) => {
     if(randomText === value){
       addVolume()
@@ -84,61 +92,49 @@ function TextTypingGame() {
       // clearInterval(countDown)
   },[volume])
 
-  // const countDown = (val) => {
-  //   console.log('tick')
-  //   if(volume > 0){
-  //     if(add){
-  //       setAdd(false)
-  //       return setVolume(val + 10)
-  //     } else if(subtract) {
-  //       setSubtract(false)
-  //       clearInterval(val)
-  //       return setVolume(val - 10)
-  //     }
-  //     else{
-  //       clearInterval(val)
-  //       return setVolume(val -1)
-  //     }
-  //   }
-  // }
+  useEffect(()=> {
+    {randomText &&
+      checkInput()
+    }
+  },[inputText])
 
-  
-//   const countDown = () => {
-//     if(volume > 0){
-//       const intervalId = setInterval(() => {
+  const checkInput = () => {
+    const newArr = [...randomText]
+    for(let i= 0; i < correctNum; i++){
+      console.log(correctNum)
+      if(newArr[i].letter === inputText.slice(-1)){
+        newArr[i].correct = true
+        setCorrectNum(newArr.filter((data)=> data.correct).length + 1)
+      } 
+      if(newArr.length === correctNum){
+        setRandomText(getRandomText())
+        setCorrectNum(1)
+      } 
+    }
+  }
 
-//       if(add){
-//         setAdd(false)
-//         clearInterval(intervalId)
-//         return setVolume(volume + 10)
-//       } else if(subtract) {
-//         setSubtract(false)
-//         clearInterval(intervalId)
-//         return setVolume(volume - 10)
-//       }
-//       else{
-//         clearInterval(intervalId)
-//         return setVolume(volume -1)
-//       }
-      
-//     }, 1000);
-//   }
-  
-// }
-console.log(volume)
+
+
   return (
     <div className="typing-game">
       <h1>Text Typing Game</h1>
-      <p>{randomText}</p>
+      <div className="typing__text">
+        {randomText && randomText.map((text)=>(
+          <p className={`${text.correct && 'active'} typingGame__text`} text>{text.letter}</p>
+        ))}
+      </div>
       {warningText ? 
         <p className="typingGame__warning">{warningText}</p> : <div className="spacing"></div>
       }
-      <form onSubmit={submitHandler}>
-        <input type="text" value={inputText} onChange={e => {
+      <form className="typingGame__form" onSubmit={submitHandler}>
+        <div className="hide__input">
+          <p></p>
+        </div>
+        <input className="typingGame__input" type="hidden" onBlur={({ target }) => target.focus()} autoFocus type="text" value={inputText} onChange={e => {
           setInputText(e.target.value)
           setWarningText('')
           }}/>
-        <input type="submit" />
+        <input className="typingGame__btn" type="submit" />
       </form>
       <VolumeChart setVolume={setVolume} volume={volume} />
     </div>
