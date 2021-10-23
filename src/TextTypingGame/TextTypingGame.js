@@ -87,9 +87,6 @@ function TextTypingGame() {
     } else {
       return setVolume(0)
     }
-    
-      // setInterval(() => countDown(volume), 1000);
-      // clearInterval(countDown)
   },[volume])
 
   useEffect(()=> {
@@ -112,8 +109,6 @@ function TextTypingGame() {
       } 
     }
   }
-
-
 
   return (
     <div className="typing-game">
