@@ -1,0 +1,66 @@
+.dota__loading {
+  height: 600px;
+  width: 800px;
+  position: relative;
+}
+
+.dotaLoading__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dotaLoading__bar {
+  position: relative;
+  z-index: 2;
+  
+}
+
+.dotaLoadingBar__img {
+  position: absolute;
+  left: -83px;
+  top: 220px;
+  width: 957px;
+  z-index: 2;
+}
+
+.dotaLoadingBar__container {
+  position:relative;
+  width: 464px;
+}
+
+.dotaLoadingBar__progress {
+  position: absolute;
+    height: 27px;
+    top: 493px;
+    left: 162px;
+    width:100%;
+    background-image: -webkit-linear-gradient(90deg,#080E33, #13526A, #080E33);
+}
+
+.dotaLoadingBar__text {
+  z-index: 5;
+  color: #F1CB13;
+  position: absolute;
+  top: 493px;
+  left: 375px;
+}
+
+.timelapse {
+	animation-name: timelapse;
+	animation-fill-mode: forwards;
+	animation-duration: 2s;
+	animation-timing-function: cubic-bezier(.86, .05, .4, .96);
+}
+
+@keyframes timelapse {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
