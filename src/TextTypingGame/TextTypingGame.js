@@ -1,32 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import {list} from './textList'
-import VolumeChart from './VolumeChart'
 import './TextTypingGame.css'
 
 function TextTypingGame() {
   const [inputText, setInputText] = useState('')
-  const [randomText, setRandomText] = useState()
-  const [warningText, setWarningText] = useState('')
-  const [volume, setVolume] = useState(50)
+  const [randomText, setRandomText] = useState([])
+  const [volume, setVolume] = useState(0)
   const [add, setAdd] = useState(false)
-  const [subtract, setSubtract] = useState(false)
   const [correctNum, setCorrectNum] = useState(1)
+  const [showMessage, setShowMessage] = useState(false)
+  const [showAddVolume, setShowAddVolume] = useState(false)
+  const [gameStart, setGameStart] = useState(false)
+  const [points, setPoints] = useState(0)
 
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-    checkSubmit(inputText.toLowerCase())
-  }
-  
-
-  useEffect(()=> {
-    setRandomText(getRandomText())
-  },[])
-
-  
   const getRandom = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  
   const getRandomText = () => {
     const newArr = []
     const newText =  list[getRandom(0, list.length)].toLowerCase()
@@ -36,102 +26,111 @@ function TextTypingGame() {
     return newArr
   }
 
-
-  //change this thing use what i used in search function inventory, useeffect on every type
-  const checkSubmit = (value) => {
-    if(randomText === value){
-      addVolume()
-    } else {
-      subtractVolume()
-    }
-  }
-
   const addVolume = () => {
-    setWarningText('youre right')
     setInputText('')
     setRandomText(getRandomText())
     setAdd(true)
-    // if(volume < 100){
-    //   setVolume(volume + 10)
-    // }
   }
-
-  const subtractVolume = () => {
-    setWarningText('youre wrong')
-    setInputText('')
-    setSubtract(true)
-    // if(volume > 0){
-    //   setVolume(volume - 10)
-    // }
-  }
-  //tomer countdown bug, double time shown
+  
   useEffect(()=> {
-    if(volume > 0){
-      const intervalId = setInterval(() => {
-        if(add){
-          setAdd(false)
-          return setVolume(volume + 10)
-        } else if(subtract) {
-          setSubtract(false)
-          return setVolume(volume - 10)
+    setRandomText(getRandomText())
+  },[])
+
+  useEffect(()=> {
+      if(volume > 0){
+        const intervalId = setInterval(() => {
+          if(add){
+            setAdd(false)
+            if(volume >= 90){
+              return setVolume(100)
+            }
+            return setVolume(volume + randomText.length)
+          }
+          else{
+              setVolume(volume -1)
+          }
+        }, 100);
+        return ()=> {
+          clearInterval(intervalId)
         }
-        else{
-          setVolume(volume -1)
-        }
-      }, 1000);
-      return ()=> {
-        clearInterval(intervalId)
+      } else {
+        setGameStart(false)
+        return setVolume(0)
       }
-    } else if(volume > 100){
-      return setVolume(100)
-    } else {
-      return setVolume(0)
-    }
   },[volume])
 
   useEffect(()=> {
-    {randomText &&
-      checkInput()
+    if(gameStart){
+      if(randomText){
+        checkInput()
+      }
     }
   },[inputText])
 
   const checkInput = () => {
     const newArr = [...randomText]
     for(let i= 0; i < correctNum; i++){
-      console.log(correctNum)
       if(newArr[i].letter === inputText.slice(-1)){
         newArr[i].correct = true
         setCorrectNum(newArr.filter((data)=> data.correct).length + 1)
-      } 
+      }
       if(newArr.length === correctNum){
+        addVolume()
+        setShowMessage(true)
         setRandomText(getRandomText())
         setCorrectNum(1)
+        setShowAddVolume(true)
+        setPoints(points + 1)
       } 
     }
   }
 
+  const handleKeypress = e => {
+    if(!gameStart){
+      if (e.key === "Enter") {
+        startGame()
+      }
+    }
+  };
+  
+  const startGame = () => {
+    setVolume(100)
+    setGameStart(true)
+    setPoints(0)
+  }
+
   return (
     <div className="typing-game">
-      <h1>Text Typing Game</h1>
+      <p className="typingGame__logo">Text Typing Game</p>
+      <div onTransitionEnd={() => setShowMessage(false)} className={`typingGame__messageContainer ${!showMessage ? 'message__hidden' : 'message__shown'}` }>
+        <p className="typingGame__message">Correct!</p>
+      </div>
       <div className="typing__text">
-        {randomText && randomText.map((text)=>(
-          <p className={`${text.correct && 'active'} typingGame__text`} text>{text.letter}</p>
+        {randomText && randomText.map((text, index)=>(
+          <p key={index} className={`${text.correct && 'active'} typingGame__text`} text>{text.letter}</p>
         ))}
       </div>
-      {warningText ? 
-        <p className="typingGame__warning">{warningText}</p> : <div className="spacing"></div>
+      <p className="typingGame__volume">volume: {volume}% <span onTransitionEnd={() => setShowAddVolume(false)} className={`typingGame__plus ${!showAddVolume && 'message__hidden'}`}>+10</span></p>
+      <p className="typingGame__points">points: {points}</p>
+      {!gameStart ?
+        <button onClick={()=>{
+          startGame()
+        }} 
+          className="typingGame__start">start</button> : null
       }
-      <form className="typingGame__form" onSubmit={submitHandler}>
+
+      <form className="typingGame__form" onSubmit={e => e.preventDefault()}>
         <div className="hide__input">
           <p></p>
         </div>
-        <input className="typingGame__input" type="hidden" onBlur={({ target }) => target.focus()} autoFocus type="text" value={inputText} onChange={e => {
-          setInputText(e.target.value)
-          setWarningText('')
-          }}/>
-        <input className="typingGame__btn" type="submit" />
+        <input className="typingGame__input" onBlur={({ target }) => target.focus()} autoFocus value={inputText} 
+          onChange={e => {
+            setInputText(e.target.value)
+          }}
+          onKeyPress={handleKeypress}
+          />
+          
       </form>
-      <VolumeChart setVolume={setVolume} volume={volume} />
     </div>
   )
 }
