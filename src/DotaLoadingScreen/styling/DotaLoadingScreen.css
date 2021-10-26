@@ -1,10 +1,65 @@
+@font-face {
+  font-family: myDrakon;
+  src: url(drakon.ttf);
+}
+
+h2 {
+  font-family: myDrakon;
+  -webkit-text-stroke-width: .1px;
+  -webkit-text-stroke-color: #2461AA;
+}
+
+h4 {
+  font-family: myDrakon;
+  font-size: 2.5em;
+}
+
 .dota__loading {
   height: 600px;
   width: 800px;
   position: relative;
 }
 
+.dotaLoading__logoText {
+  position: relative;
+}
+
+.logoText__upper {
+  position: absolute;
+  top: 0;
+  left: 34px;
+  font-size: 8em;
+}
+.logoText__lower {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  font-size: 12em;
+}
+.logoText__second {
+  position: absolute;
+    top: 60px;
+    left: 457px;
+}
+.logoText__third {
+  position: absolute;
+    top: 100px;
+    left: 458px;
+}
+
+.dotaLoading__test {
+  
+  height: 35px;
+  width: 109px;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 200px;
+  left: 913px;
+}
+
 .dotaLoading__img {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -52,7 +107,7 @@
 .timelapse {
 	animation-name: timelapse;
 	animation-fill-mode: forwards;
-	animation-duration: 2s;
+	animation-duration: 20s;
 	animation-timing-function: cubic-bezier(.86, .05, .4, .96);
 }
 
@@ -61,6 +116,6 @@
 		width: 0%;
 	}
 	100% {
-		width: 100%;
+		width: 95%;
 	}
 }
