@@ -5,46 +5,76 @@
 
 h2 {
   font-family: myDrakon;
-  -webkit-text-stroke-width: .1px;
-  -webkit-text-stroke-color: #2461AA;
+  font-weight: 400;
+  color: #FFFFF7;
+  text-shadow:#FFF992 1px 0 10px;
 }
 
 h4 {
   font-family: myDrakon;
-  font-size: 2.5em;
+  font-size: 1em;
+  font-weight: 300;
+  color: #FFFFF7;
+  text-shadow:#FFF992 1px 0 10px;
 }
 
 .dota__loading {
+  background-color: gray;
   height: 600px;
   width: 800px;
   position: relative;
 }
 
+
+
 .dotaLoading__logoText {
+  z-index: 10;
   position: relative;
+  top: 359px;
+  left: 267px;
 }
 
 .logoText__upper {
   position: absolute;
   top: 0;
   left: 34px;
-  font-size: 8em;
+  font-size: 3em;
 }
 .logoText__lower {
   position: absolute;
-  top: 99px;
-  left: 0;
-  font-size: 12em;
+  top: 36px;
+  left: 16px;
+  font-size: 5em;
 }
 .logoText__second {
+  font-family: serif;
   position: absolute;
-    top: 60px;
-    left: 457px;
+  top: 25px;
+  left: 195px;
 }
 .logoText__third {
+  font-family: serif;
   position: absolute;
-    top: 100px;
-    left: 458px;
+  top: 41px;
+  left: 195px;
+}
+.logoText__author {
+  color: #C9E4FA;
+  text-shadow: none;
+  font-family: serif;
+  position: absolute;
+  top: 0px;
+  left: 74px;
+  font-size: 0.8em;
+}
+.logoText__presents {
+  color: #C9E4FA;
+  text-shadow: none;
+  font-family: serif;
+  position: absolute;
+  font-size: 0.7em;
+  top: -1px;
+  left: 132px;
 }
 
 .dotaLoading__test {
@@ -58,8 +88,7 @@ h4 {
   left: 913px;
 }
 
-.dotaLoading__img {
-  display: none;
+.dotaLoading__img, .dotaTavern__img {
   position: absolute;
   top: 0;
   left: 0;
@@ -97,17 +126,21 @@ h4 {
 }
 
 .dotaLoadingBar__text {
+  font-family: serif;
+  font-size: .8em;
   z-index: 5;
   color: #F1CB13;
   position: absolute;
-  top: 493px;
-  left: 375px;
+  top: 500px;
+  left: 348px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
 }
 
 .timelapse {
 	animation-name: timelapse;
 	animation-fill-mode: forwards;
-	animation-duration: 20s;
+	animation-duration: 2s;
 	animation-timing-function: cubic-bezier(.86, .05, .4, .96);
 }
 
@@ -118,4 +151,121 @@ h4 {
 	100% {
 		width: 95%;
 	}
+}
+
+
+.dota__loading:hover {
+  cursor: url('Night\ Elf.cur'), auto;
+}
+
+.dotaTavern__timer {
+  position: relative;
+  z-index: 12;
+  top: 2px;
+}
+
+.dotaTimer__minutes {
+  position: absolute;
+  color: white;
+  top: 0;
+  left: 610px;
+  font-size: .7em;
+  height: 15px;
+  width: 12px;
+  padding: 0;
+  margin: 0;
+  background-color: black;
+}
+
+.dotaTimer__second {
+  position: absolute;
+  top: 0;
+  left: 698px;
+  font-size: .7em;
+  color: white;
+  height: 15px;
+  width: 10px;
+  padding: 0;
+  margin: 0;
+  background-color: black;
+}
+
+.dotaTavern__one {
+  position: relative;
+  z-index: 11;
+  top: 468px;
+  left: 403px;
+}
+
+.hero__one {
+  position: absolute;
+  top: 0;
+  left: 214px;
+  width: 40px;
+}
+.hero__two {
+  position: absolute;
+  top: 0;
+  left: 256px;
+  width: 40px;
+}
+.hero__three {
+  position: absolute;
+  top: 0;
+  left: 300px;
+  width: 40px;
+}
+.hero__four {
+  position: absolute;
+  top: 0;
+  left: 343px;
+  width: 40px;
+}
+.hero__five {
+  position: absolute;
+  top: 42px;
+  left: 214px;
+  width: 40px;
+}
+.hero__six {
+  position: absolute;
+  top: 42px;
+  left: 256px;
+  width: 40px;
+}
+.hero__seven {
+  position: absolute;
+  top: 42px;
+  left: 300px;
+  width: 40px;
+}
+.hero__eight {
+  position: absolute;
+  top: 42px;
+  left: 343px;
+  width: 40px;
+}
+.hero__nine {
+  position: absolute;
+  top: 85px;
+  left: 214px;
+  width: 40px;
+}
+.hero__ten{
+  position: absolute;
+  top: 85px;
+  left: 256px;
+  width: 40px;
+}
+.hero__eleven {
+  position: absolute;
+  top: 85px;
+  left: 300px;
+  width: 40px;
+}
+.hero__twelve {
+  position: absolute;
+  top: 85px;
+  left: 343px;
+  width: 40px;
 }
