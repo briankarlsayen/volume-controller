@@ -269,3 +269,39 @@ h4 {
   left: 343px;
   width: 40px;
 }
+
+
+
+
+.dota__details {
+  z-index: 13;
+  position: relative;
+  top: 140px;
+  left: 566px;
+  background-color: rgb(50,68,88, .5);
+  border: 1px solid #A69C73;
+  border-radius: 5px;
+  color: white;
+  font-size: .7em;
+  padding: 2px;
+  width: 230px;
+}
+
+.dotaDetails__gold {
+  padding: 1.5px 0;
+  color: yellow;
+}
+
+.gold__img {
+  border: .5px solid yellow;
+  width: 8px;
+  margin-right: 3px;
+}
+
+.dotaDetails__attrib {
+  padding: 10px 0;
+}
+
+.dotaDetails__skills {
+  padding-bottom: 10px;
+}
