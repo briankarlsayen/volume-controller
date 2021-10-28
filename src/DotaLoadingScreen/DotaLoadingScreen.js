@@ -21,6 +21,7 @@ function DotaLoadingScreen() {
   const [second, setSecond] = useState(0)
   const [isHeroDetail, setIsHeroDetail] = useState(false)
   const [heroArray, setHeroArray] = useState([])
+  const [isTavern, setIsTavern] = useState('')
   const [defaultDetails, setDefaultDetails] = useState({
     displayName: '',
     stat: {
@@ -44,6 +45,8 @@ function DotaLoadingScreen() {
     }
   })
   
+  console.log(isTavern)
+
   //create clock: minutes, seconds
   useEffect(()=> {
     if(!isLoading){
@@ -60,7 +63,6 @@ function DotaLoadingScreen() {
     }
   },[second, isLoading])
 
-
   useEffect(()=> {
     fetch('https://api.stratz.com/api/v1/Hero')
     .then((res) => {
@@ -68,6 +70,7 @@ function DotaLoadingScreen() {
         console.log('err')
       }
       res.json().then((data) => {
+        console.log(data)
         setHeroArray(Object.entries(data));
       })
     })
@@ -97,13 +100,23 @@ function DotaLoadingScreen() {
       language: {
         bio: reFilter
       },
-      skill: {
-        first: filterSkills[0].skills[0],
-        second: filterSkills[0].skills[1],
-        third: filterSkills[0].skills[2],
-        fourth: filterSkills[0].skills[3]
-      }
+      // skill: {
+      //   first: filterSkills[0].skills[0],
+      //   second: filterSkills[0].skills[1],
+      //   third: filterSkills[0].skills[2],
+      //   fourth: filterSkills[0].skills[3]
+      // }
     })
+  }
+
+  const tavernContainer = () => {
+    return(
+      <div className="tavern__container">
+        <div onClick={()=>setIsTavern('one')} className={`tavern__one + ${isTavern === 'one' ? 'tavern__active' : null}`}></div>
+        <div onClick={()=>setIsTavern('two')} className={`tavern__two + ${isTavern === 'two' ? 'tavern__active' : null}`}></div>
+        <div onClick={()=>setIsTavern('three')} className={`tavern__three + ${isTavern === 'three' ? 'tavern__active' : null}`}></div>
+      </div>
+    )
   }
 
 
@@ -113,13 +126,12 @@ function DotaLoadingScreen() {
         <p>{defaultDetails.displayName}</p>
         <p className="dotaDetails__gold"><img className="gold__img" src={Gold} alt="gold" />250</p>
         <p>{defaultDetails.language.bio}</p>
-        {/* <p>As The Admiral of the mighty Claddish Navy, Kunkka was charged with protecting the isles of his homeland when the demons of the Cataract made a concerted grab at the lands of men. After years of small sorties, and increasingly bold and devastating attacks, the demon fleet flung all its carnivorous ships at the Trembling Isle. Desperate, the Suicide-Mages of Cladd committed their ultimate rite, summoning a host of ancestral spirits to protect the fleet. Against the demons, this was just barely enough to turn the tide.</p> */}
         <div className="dotaDetails__attrib">
           <p><span style={{color: '#315dce'}}>Strength</span> - {defaultDetails.stat.strengthBase} + {defaultDetails.stat.strengthGain}</p>
           <p><span style={{color: 'red'}}>Agility</span> - {defaultDetails.stat.agilityBase} + {defaultDetails.stat.agilityGain}</p>
           <p><span style={{color: '#315dce'}}>Intelligence</span> - {defaultDetails.stat.intelligenceBase} + {defaultDetails.stat.intelligenceGain}</p>
         </div>
-        <p className="dotaDetails__skills">Learns {defaultDetails.skill.first}, {defaultDetails.skill.second}, {defaultDetails.skill.third}, and <span style={{color: 'orange'}}>{defaultDetails.skill.fourth}.</span></p>
+        {/* <p className="dotaDetails__skills">Learns {defaultDetails.skill.first}, {defaultDetails.skill.second}, {defaultDetails.skill.third}, and <span style={{color: 'orange'}}>{defaultDetails.skill.fourth}.</span></p> */}
         <p>Attack range of {defaultDetails.stat.attackRange}.</p>
         <p>Movement speed of {defaultDetails.stat.moveSpeed}.</p>
       </div>
@@ -150,14 +162,9 @@ function DotaLoadingScreen() {
     )
   }
 
-  const showTavern = () => {
-    return (
-      <>
-        <img className="dotaTavern__img" src={DotaTavern} alt="dota-tavern" />
-        <div className="dotaTavern__timer">
-          <p className="dotaTimer__minutes">{minutes}</p>
-          <p className="dotaTimer__second">{second}</p>
-        </div>
+  const checkTavern = (tavern) => {
+    if(tavern === 'one'){
+      return(
         <div className="dotaTavern__one">
           <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__one" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Admiralproudmoore.jpg" alt="kunkka" />
           <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)}  className="hero__two" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Beastmaster.jpg" alt="Beastmaster" />
@@ -172,7 +179,55 @@ function DotaLoadingScreen() {
           <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__eleven" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/wisp.jpg" alt="wisp" />
           <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__twelve" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Alchemist.jpg" alt="alchemist" />
         </div>
+      )
+    } else if (tavern === 'two'){
+      return(
+        <div className="dotaTavern__one">
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__one" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/AntiMage.jpg" alt="antimage" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)}  className="hero__two" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/DwarvenSniper.jpg" alt="sniper" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__three" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Juggernaut.jpg" alt="juggernaut" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__four" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/LoneDruid.jpg" alt="lone_druid" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__five" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Moonrider.jpg" alt="luna" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__six" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Morphling.jpg" alt="morphling" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__seven" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/NagaSiren.jpg" alt="naga_siren" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__eight" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/PhantomLancer.jpg" alt="phantom_lancer" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__nine" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/PriestessOfTheMoon.jpg" alt="mirana" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__ten" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/StealthAssassin.jpg" alt="riki" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__eleven" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/TrollWarlord.jpg" alt="troll_warlord" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__twelve" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Gyrocopter.jpg" alt="gyrocopter" />
+        </div>
+      )
+    } else if (tavern === 'three'){
+      return(
+        <div className="dotaTavern__one">
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__one" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/CrystalMaiden.jpg" alt="crystal_maiden" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)}  className="hero__two" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Enchantress.jpg" alt="enchantress" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__three" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/FaerieDragon.jpg" alt="puck" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__four" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/HolyKnight.jpg" alt="chen" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__five" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Keeperofthelight.jpg" alt="keeper_of_the_light" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__six" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/LordofOlympia.jpg" alt="zuus" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__seven" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Prophet.jpg" alt="furion" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__eight" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Silencer.jpg" alt="silencer" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__nine" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Slayer.jpg" alt="lina" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__ten" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/StormSpirit.jpg" alt="storm_spirit" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__eleven" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Windrunner.jpg" alt="windrunner" />
+          <img onMouseEnter={(e)=>hoverHero(e.target.alt)} onMouseLeave={()=> setIsHeroDetail(false)} className="hero__twelve" src="https://gaming-tools.com/warcraft-3/wp-content/uploads/sites/2/2020/04/Thrall.jpg" alt="disruptor" />
+        </div>
+      )
+    }
+  }
+
+  const showTavern = () => {
+    return (
+      <>
+        <img onClick={()=> setIsTavern('')} className="dotaTavern__img" src={DotaTavern} alt="dota-tavern" />
+        <div className="dotaTavern__timer">
+          <p className="dotaTimer__minutes">{minutes}</p>
+          <p className="dotaTimer__second">{second}</p>
+        </div>
+        {checkTavern(isTavern)}
         {isHeroDetail ? heroDetails() : null}
+        {tavernContainer()}
       </>
     )
   }

@@ -305,3 +305,53 @@ h4 {
 .dotaDetails__skills {
   padding-bottom: 10px;
 }
+
+
+
+
+.tavern__container {
+  position: relative;
+  z-index: 12;
+  top: 1px;
+  left: 1px;
+}
+.tavern__one {
+  position: fixed;
+  top: 109px;
+  left: 281px;
+  border-radius: 50%;
+  width: 99px;
+  height: 87px;
+  display: inline-block;
+  border-top: 3px solid transparent;
+  transform: rotate(334deg);
+}
+
+.tavern__active {
+  border-left: 3px solid rgb(255,255,0,.7);
+  border-right: 3px solid rgb(255,255,0,.7);
+  border-bottom: 3px solid rgb(255,255,0,.7);
+}
+
+.tavern__two {
+  position: fixed;
+  top: 225px;
+  left: 268px;
+  border-radius: 50%;
+  width: 108px;
+  height: 87px;
+  display: inline-block;
+  border-top: 3px solid transparent;
+  transform: rotate(334deg);
+}
+.tavern__three {
+  position: fixed;
+  top: 353px;
+  left: 264px;
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  display: inline-block;
+  border-top: 3px solid transparent;
+  transform: rotate(327deg);
+}
