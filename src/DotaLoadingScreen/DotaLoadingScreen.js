@@ -100,12 +100,12 @@ function DotaLoadingScreen() {
       language: {
         bio: reFilter
       },
-      // skill: {
-      //   first: filterSkills[0].skills[0],
-      //   second: filterSkills[0].skills[1],
-      //   third: filterSkills[0].skills[2],
-      //   fourth: filterSkills[0].skills[3]
-      // }
+      skill: {
+        first: filterSkills[0].skills[0],
+        second: filterSkills[0].skills[1],
+        third: filterSkills[0].skills[2],
+        fourth: filterSkills[0].skills[3]
+      }
     })
   }
 
@@ -131,7 +131,7 @@ function DotaLoadingScreen() {
           <p><span style={{color: 'red'}}>Agility</span> - {defaultDetails.stat.agilityBase} + {defaultDetails.stat.agilityGain}</p>
           <p><span style={{color: '#315dce'}}>Intelligence</span> - {defaultDetails.stat.intelligenceBase} + {defaultDetails.stat.intelligenceGain}</p>
         </div>
-        {/* <p className="dotaDetails__skills">Learns {defaultDetails.skill.first}, {defaultDetails.skill.second}, {defaultDetails.skill.third}, and <span style={{color: 'orange'}}>{defaultDetails.skill.fourth}.</span></p> */}
+        <p className="dotaDetails__skills">Learns {defaultDetails.skill.first}, {defaultDetails.skill.second}, {defaultDetails.skill.third}, and <span style={{color: 'orange'}}>{defaultDetails.skill.fourth}.</span></p>
         <p>Attack range of {defaultDetails.stat.attackRange}.</p>
         <p>Movement speed of {defaultDetails.stat.moveSpeed}.</p>
       </div>
@@ -226,8 +226,8 @@ function DotaLoadingScreen() {
           <p className="dotaTimer__second">{second}</p>
         </div>
         {checkTavern(isTavern)}
-        {isHeroDetail ? heroDetails() : null}
         {tavernContainer()}
+        {isHeroDetail ? heroDetails() : null}
       </>
     )
   }

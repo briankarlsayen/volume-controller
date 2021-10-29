@@ -140,7 +140,7 @@ h4 {
 .timelapse {
 	animation-name: timelapse;
 	animation-fill-mode: forwards;
-	animation-duration: 2s;
+	animation-duration: 5s;
 	animation-timing-function: cubic-bezier(.86, .05, .4, .96);
 }
 
@@ -149,7 +149,7 @@ h4 {
 		width: 0%;
 	}
 	100% {
-		width: 95%;
+		width: 100%;
 	}
 }
 
@@ -316,7 +316,7 @@ h4 {
   left: 1px;
 }
 .tavern__one {
-  position: fixed;
+  position: absolute;
   top: 109px;
   left: 281px;
   border-radius: 50%;
@@ -334,7 +334,7 @@ h4 {
 }
 
 .tavern__two {
-  position: fixed;
+  position: absolute;
   top: 225px;
   left: 268px;
   border-radius: 50%;
@@ -345,7 +345,7 @@ h4 {
   transform: rotate(334deg);
 }
 .tavern__three {
-  position: fixed;
+  position: absolute;
   top: 353px;
   left: 264px;
   border-radius: 50%;
