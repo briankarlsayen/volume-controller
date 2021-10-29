@@ -22,6 +22,9 @@ function DotaLoadingScreen() {
   const [isHeroDetail, setIsHeroDetail] = useState(false)
   const [heroArray, setHeroArray] = useState([])
   const [isTavern, setIsTavern] = useState('')
+  const [isChat, setIsChat] = useState(false);
+  const [chatText, setChatText] = useState('')
+  const [chatArr, setChatArr] = useState([])
   const [defaultDetails, setDefaultDetails] = useState({
     displayName: '',
     stat: {
@@ -44,8 +47,6 @@ function DotaLoadingScreen() {
       fourth: ''
     }
   })
-  
-  console.log(isTavern)
 
   //create clock: minutes, seconds
   useEffect(()=> {
@@ -70,7 +71,6 @@ function DotaLoadingScreen() {
         console.log('err')
       }
       res.json().then((data) => {
-        console.log(data)
         setHeroArray(Object.entries(data));
       })
     })
@@ -78,6 +78,71 @@ function DotaLoadingScreen() {
       console.log(err)
     })
     }, [])
+
+  // useEffect(()=> {
+  //   showChatBox()
+  // },[chatArr])
+
+  const showChatBox = () => {
+    return(
+      <div className="dota__text">
+        <p>[Allies] <span style={{color: 'blue'}}>boydota</span>: bobo</p>
+      </div>
+    )
+    // chatArr.map((text) => {
+    //   console.log(text)
+    //   return(
+    //     <p>{text}</p>
+    //   )
+    // })
+  }
+
+  const chatBoxText = (props) => {
+    return(
+      <div></div>
+    )
+  }
+  
+  const handleKeypress = e => {
+    if(!isLoading){
+      if(!isChat){
+        if (e.key === "Enter") {
+          setIsChat(true)
+        }
+      }
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    let newArr = chatArr;
+    console.log(chatArr)
+    if(chatText !== ''){
+      newArr.push(chatText)
+      setChatArr(newArr)
+    }
+    setChatText('')
+  }
+
+  const showChat = () => {
+    return(
+      <div className="dota__chat">
+        <form onSubmit={e => submitHandler(e)} className="dotaChat__box">
+          <p className="dotaChatBox__loc">To Allies: </p>
+          <input onBlur={()=>{
+            setChatText('')
+            setIsChat(false)
+            }} 
+            autoFocus autoCorrect="off" 
+            autoComplete="off" 
+            className="dotaChatBox__input" 
+            type="text" 
+            value={chatText} 
+            onChange={e => setChatText(e.target.value)}/>
+        </form>
+      </div>
+    )
+  }
 
   const hoverHero = (heroName) => {
     setIsHeroDetail(true)
@@ -112,9 +177,9 @@ function DotaLoadingScreen() {
   const tavernContainer = () => {
     return(
       <div className="tavern__container">
-        <div onClick={()=>setIsTavern('one')} className={`tavern__one + ${isTavern === 'one' ? 'tavern__active' : null}`}></div>
-        <div onClick={()=>setIsTavern('two')} className={`tavern__two + ${isTavern === 'two' ? 'tavern__active' : null}`}></div>
-        <div onClick={()=>setIsTavern('three')} className={`tavern__three + ${isTavern === 'three' ? 'tavern__active' : null}`}></div>
+        <div onClick={()=>setIsTavern('one')} className={`tavern__one ${isTavern === 'one' ? 'tavern__active' : null}`}></div>
+        <div onClick={()=>setIsTavern('two')} className={`tavern__two ${isTavern === 'two' ? 'tavern__active' : null}`}></div>
+        <div onClick={()=>setIsTavern('three')} className={`tavern__three ${isTavern === 'three' ? 'tavern__active' : null}`}></div>
       </div>
     )
   }
@@ -219,7 +284,7 @@ function DotaLoadingScreen() {
 
   const showTavern = () => {
     return (
-      <>
+      <div>
         <img onClick={()=> setIsTavern('')} className="dotaTavern__img" src={DotaTavern} alt="dota-tavern" />
         <div className="dotaTavern__timer">
           <p className="dotaTimer__minutes">{minutes}</p>
@@ -227,13 +292,15 @@ function DotaLoadingScreen() {
         </div>
         {checkTavern(isTavern)}
         {tavernContainer()}
+        {showChatBox()}
+        {isChat ? showChat() : null}
         {isHeroDetail ? heroDetails() : null}
-      </>
+      </div>
     )
   }
 
   return (
-    <div className="dota__loading">
+    <div tabIndex="0" onKeyDown={e => handleKeypress(e)} className="dota__loading">
       {isLoading ? showLoading(): showTavern()}
     </div>
   )

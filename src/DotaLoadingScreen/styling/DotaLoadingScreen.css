@@ -355,3 +355,45 @@ h4 {
   border-top: 3px solid transparent;
   transform: rotate(327deg);
 }
+
+
+
+.dota__chat {
+  position: relative;
+}
+
+.dotaChat__box {
+  position: absolute;
+  background-color: rgb(50,68,88, .5);
+  border: 1px solid #A69C73;
+  top: 445px;
+  left: 201px;
+  width: 400px;
+  padding: 2px;
+  display: flex;
+  border-radius: 2px;
+  padding: 3px;
+}
+
+.dotaChatBox__loc {
+  font-size: .8em;
+  color: #e0c350;
+}
+
+.dotaChatBox__input {
+  padding-left: 5px;
+  border: none;
+  outline: none;
+  color: white;
+  width: 338px;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.dota__text {
+  position: relative;
+  top: 371px;
+  left: 11px;
+  font-size: .8em;
+  color: white;
+}
